@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>For My Dearest May!</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A cinematic love letter website dedicated to May.">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Google Sign-In -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<noscript>
+  <div style="position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:black;color:white;z-index:99999">
+    This website requires JavaScript enabled.
+  </div>
+</noscript>
+
+  <!-- Video Background -->
+  <video autoplay muted loop playsinline id="bg-video" poster="paper/bag2.jpg">
+    <source src="paper/vid1.mp4" type="video/mp4">
+  </video>
+
+  <!-- AUDIO: background music (loop) -->
+  <!-- Pastikan file lagu berada di paper/music.mp3 -->
+  <audio id="bg-audio" src="paper/music.mp3" preload="auto" loop></audio>
+
+  <!-- Unobtrusive audio hint / fallback (muncul kalau autoplay diblokir) -->
+  <div id="audio-hint" role="button" aria-label="Mainkan musik" tabindex="0" hidden>
+    <span class="audio-icon">▶</span>
+    <span class="audio-label"></span>
+  </div>
+
+  <!-- Login -->
+  <div id="login">
+    <h2>Use your Google Account</h2>
+
+    <div id="g_id_onload"
+      data-client_id="566440473911-bfl9esip2g11v2s82f4ags580t5oi7hd.apps.googleusercontent.com"
+      data-callback="handleCredentialResponse">
+    </div>
+
+    <div class="g_id_signin-wrapper">
+      <div class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-shape="pill"
+        data-theme="outline"
+        data-width="250">
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div id="content" style="display:none;">
+    <div id="letter-button" onclick="showMessage()" tabindex="0" role="button">
+      <img src="paper/letter.jpg" alt="Open Letter">
+      <span>Open Me</span>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlay" role="button" aria-label="Close overlay"></div>
+
+  <!-- Popup Surat -->
+  <div id="letter-popup" role="dialog" aria-modal="true">
+    <img src="paper/letter2.JPG" alt="Love Letter">
+  </div>
+
+  <!-- Next Button -->
+  <button id="next-btn" onclick="showTimeline()">Next</button>
+
+  <!-- Timeline -->
+  <div id="timeline" aria-live="polite">
+    <div class="timeline-inner">
+      <div class="timeline-item active">
+        <img class="photo" src="paper/tl2.png" alt="Memory 1" loading="lazy">
+        <img class="caption" src="paper/cap2.png" alt="Caption 1" loading="lazy">
+      </div>
+
+      <div class="timeline-item">
+        <img class="photo" src="paper/tl1.png" alt="Memory 2" loading="lazy">
+        <img class="caption" src="paper/cap1.png" alt="Caption 2" loading="lazy">
+      </div>
+
+      <div class="timeline-item">
+        <img class="photo" src="paper/tl3.png" alt="Memory 3" loading="lazy">
+        <img class="caption" src="paper/cap3.png" alt="Caption 3" loading="lazy">
+      </div>
+
+      <div class="timeline-item">
+        <img class="photo" src="paper/tl4.PNG" alt="Memory 4" loading="lazy">
+        <img class="caption" src="paper/cap4.png" alt="Caption 4" loading="lazy">
+      </div>
+
+      <div class="timeline-item">
+        <img class="photo" src="paper/tl5.png" alt="Memory 5" loading="lazy">
+        <img class="caption" src="paper/cap5.png" alt="Caption 5" loading="lazy">
+      </div>
+    </div>
+
+    <button id="timeline-next" onclick="nextTimeline()" aria-label="Next timeline">
+      <img src="paper/arrow.png" alt="Next">
+    </button>
+  </div>
+
+  <!-- Constellation -->
+  <div id="constellation">
+    <canvas id="starfield"></canvas>
+
+    <div class="nodes">
+      <div class="stage" aria-hidden="false">
+        <div class="star-node" data-id="0" style="top:38%;left:35%;"></div>
+        <div class="star-node" data-id="1" style="top:25%;left:52%;"></div>
+        <div class="star-node" data-id="2" style="top:42%;left:68%;"></div>
+        <div class="star-node" data-id="3" style="top:62%;left:55%;"></div>
+        <div class="star-node" data-id="4" style="top:55%;left:38%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Memory Popup -->
+  <div id="memory-popup" role="dialog" aria-modal="true">
+    <img id="memory-img" alt="memory">
+    <p id="memory-text"></p>
+  </div>
+
+  <!-- Reflection -->
+  <div id="reflection">
+    <div class="reflection-text active">We found ease in each other.</div>
+    <div class="reflection-text">Warmth became familiar.</div>
+    <div class="reflection-text">Even the air felt closer.</div>
+    <div class="reflection-text">Love softened everything.</div>
+    <div class="reflection-text">And we stayed.</div>
+    <div class="reflection-text"></div>
+    <div class="reflection-text">Take a breath.<br>This moment is just for you.</div>
+    <div class="reflection-text"></div>
+    <div class="reflection-text">We learned love quietly,<br>
+      by choosing patience over noise,<br>
+      by staying when it mattered.<br><br>
+      If time is kind,<br>
+      let it keep us here,<br>
+      still choosing each other.<br><br></div>
+  </div>
+
+  <div id="cinema-fade"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

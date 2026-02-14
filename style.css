@@ -1,0 +1,713 @@
+/* style.css - lengkap (dimodifikasi sesuai permintaan) */
+
+/* ---------- GLOBAL & BASICS ---------- */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  box-sizing: border-box;
+}
+
+/* Global cinematic easing */
+:root {
+  --cinema-ease: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Video Background */
+#bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 5;
+  transition: opacity 1s var(--cinema-ease);
+}
+
+/* Background setelah login */
+body.logged-in {
+  background: url("paper/bag2.jpg") center/cover no-repeat fixed;
+}
+
+body.logged-in #bg-video {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Login */
+#login {
+  position: relative;
+  z-index: 1;
+  margin-top: 100px;
+}
+
+#login h2 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Google Sign-In */
+.g_id_signin-wrapper {
+  text-align: center;
+}
+
+#login .g_id_signin {
+  display: inline-block;
+  transform: scale(0.85);
+}
+
+/* Content */
+#content {
+  position: relative;
+  z-index: 1;
+  padding-top: 150px;
+}
+
+/* Button Amplop */
+#letter-button {
+  margin-top: 40px;
+  cursor: pointer;
+  display: inline-block;
+  transition: transform 0.3s var(--cinema-ease);
+}
+
+#letter-button img {
+  width: 180px;
+  transition: transform 0.6s var(--cinema-ease);
+}
+
+#letter-button span {
+  margin-top: 12px;
+  display: block;
+  font-size: 20px;
+  font-family: "Times New Roman", Times, serif;
+  letter-spacing: 1px;
+}
+
+#letter-button:hover {
+  transform: scale(1.06);
+}
+
+/* Shake */
+@keyframes shake {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(2deg); }
+  50% { transform: rotate(-2deg); }
+  75% { transform: rotate(2deg); }
+  100% { transform: rotate(0); }
+}
+
+#letter-button.shake {
+  animation: shake 0.4s ease;
+}
+
+/* Overlay */
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s var(--cinema-ease);
+  z-index: 5;
+  cursor: pointer;
+}
+
+#overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Popup Surat */
+#letter-popup {
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.65);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 1.0s var(--cinema-ease);
+  z-index: 10;
+}
+
+#letter-popup.show {
+  top: 50%;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+}
+
+#letter-popup img {
+  width: 575px;
+  box-shadow:
+    0 25px 50px rgba(0,0,0,0.35),
+    0 12px 20px rgba(0,0,0,0.25);
+  border-radius: 4px;
+}
+
+/* Blur */
+body.blur #content,
+body.blur #login {
+  filter: blur(3px);
+  transition: filter 0.6s var(--cinema-ease);
+}
+
+/* Next Button (Surat) */
+#next-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 8px 16px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14px;
+  background: white;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+  transition: opacity 0.5s var(--cinema-ease), transform 0.4s var(--cinema-ease);
+}
+
+#next-btn.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-4px);
+}
+
+/* ======================
+   Timeline (GIF background)
+   ====================== */
+#timeline {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* fallback color */
+  background-color: #000;
+
+  /* GIF background */
+  background-image: url("paper/backtime.GIF");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s var(--cinema-ease);
+  z-index: 15;
+  overflow: hidden;
+}
+
+/* semi-transparent overlay supaya foto/teks tetap terbaca */
+#timeline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 14;
+  pointer-events: none;
+}
+
+#timeline.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Inner wrapper for layout */
+#timeline .timeline-inner {
+  position: relative;
+  z-index: 16;
+  width: 100%;
+  max-width: 1120px;
+  padding: 40px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Make timeline items horizontally centered and layout caption beside photo */
+.timeline-item {
+  text-align: left;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.2s var(--cinema-ease), transform 1.2s var(--cinema-ease);
+  position: absolute;
+  display: flex;
+  align-items: center; /* vertical center for photo + caption */
+  gap: 20px;
+  max-width: 100%;
+  justify-content: center;
+}
+
+/* active item becomes visible and positioned normally */
+.timeline-item.active {
+  opacity: 1;
+  transform: translateY(0);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* photo and caption styling */
+.timeline-item .photo {
+  max-width: 520px;
+  width: clamp(180px, 45vw, 520px);
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0);
+  display: block;
+}
+
+.timeline-item .caption {
+  max-width: 360px;
+  width: clamp(120px, 28vw, 360px);
+  height: auto;
+  display: block;
+  align-self: center;
+  margin: 0; /* removed top margin to keep side-by-side */
+}
+
+/* Timeline Next (arrow) - now uses opacity-only transitions and fixed position inside timeline */
+#timeline-next {
+  position: absolute;
+  right: 48px;
+  bottom: 36px;
+  z-index: 16;
+  padding: 8px 18px;
+  font-family: "Times New Roman", Times, serif;
+  background: rgba(255, 255, 255, 0);
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+
+  /* opacity-only transition to avoid movement; ensures fade-out only */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.48s var(--cinema-ease);
+}
+
+#timeline-next.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#timeline-next img {
+  width: 48px;
+  height: auto;
+  display: block;
+}
+
+/* pulse romantis */
+@keyframes pulseSoft {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+#timeline-next.pulse {
+  animation: pulseSoft 2.5s var(--cinema-ease) infinite;
+}
+
+/* ======================
+   Constellation & Memory
+   ====================== */
+
+#constellation {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at bottom, #02040a, #000);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s var(--cinema-ease);
+  z-index: 30;
+  overflow: hidden;
+}
+
+#constellation.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Canvas */
+#starfield {
+  position: absolute;
+  inset: 0;
+  display: block;
+  z-index: 31;
+}
+
+/* Nodes */
+.nodes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* allow clicks only on .star-node which has pointer-events:auto */
+  z-index: 35; /* above canvas */
+}
+
+/* STAGE */
+.nodes .stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(1300px, 92vw);
+  height: min(900px, 80vh);
+  pointer-events: none;
+  touch-action: none;
+}
+
+/* star nodes */
+.nodes .stage .star-node { position:absolute; }
+
+.star-node {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 14px rgba(255,255,255,0.95);
+  cursor: pointer;
+  animation: starPulse 3s var(--cinema-ease) infinite;
+  transition: transform .35s var(--cinema-ease), opacity .35s var(--cinema-ease);
+  pointer-events: auto;
+}
+
+.star-node:hover { transform: scale(1.6); }
+
+@keyframes starPulse {
+  0%,100% { opacity:.5 }
+  50% { opacity:1 }
+}
+
+/* Popup */
+#memory-popup {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,.88);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s var(--cinema-ease);
+  z-index: 40;
+}
+
+#memory-popup.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Smooth image reveal for all memories (fixes s2 pop-in stutter) */
+#memory-popup img {
+  max-width: 420px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: 0 25px 50px rgba(0,0,0,.6);
+
+  /* smooth reveal */
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 260ms var(--cinema-ease), transform 260ms var(--cinema-ease);
+}
+
+#memory-popup p {
+  font-size: 18px;
+  max-width: 560px;
+  line-height: 1.6;
+  font-family: "Times New Roman", serif;
+  color: #f2f2f2;
+  text-align: center;
+}
+
+/* ======================
+   Reflection Sequence (semi-transparent so GIF visible)
+   ====================== */
+
+#reflection {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45); /* semi-transparant so rock.gif still visible */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.0s var(--cinema-ease);
+  z-index: 60;
+  overflow: hidden;
+}
+
+#reflection.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.reflection-text {
+  position: absolute;
+  font-family: "Times New Roman", serif;
+  font-size: 22px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.92);
+  opacity: 0;
+  transform: translateY(12px) scale(0.995);
+  transition: opacity 1.1s var(--cinema-ease), transform 1.1s var(--cinema-ease);
+  max-width: 720px;
+  padding: 0 20px;
+}
+
+.reflection-text.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.reflection-text.big {
+  font-size: 32px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  transition: opacity 1.4s var(--cinema-ease), transform 1.4s var(--cinema-ease);
+}
+
+/* ======================
+   Silent & Final (keep GIF visible behind)
+   ====================== */
+
+#silent{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,0.35); /* keep GIF visible */
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 1.2s var(--cinema-ease);
+  z-index:50;
+}
+
+#silent.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+#silent p{
+  font-size:22px;
+  font-family:"Times New Roman",serif;
+  color:white;
+  text-align:center;
+  line-height:1.6;
+  opacity:.95;
+}
+
+/* Final */
+#final {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35); /* darker overlay but still lets GIF show */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.8s var(--cinema-ease);
+  z-index: 70;
+}
+
+#final.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#final p {
+  font-family: "Times New Roman", serif;
+  font-size: 24px;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.95);
+  max-width: 680px;
+}
+
+/* Provide "no-fade" helpers: when JS requests immediate show/hide for silent/final */
+#silent.no-fade,
+#final.no-fade {
+  transition: none !important;
+}
+
+#silent.no-fade-hide,
+#final.no-fade-hide {
+  transition: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Cinematic Fade overlay */
+#cinema-fade {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 100;
+  transition: opacity 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+#cinema-fade.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .timeline-item { gap: 12px; padding: 12px; }
+  .timeline-item .photo { max-width: 70%; width: auto; }
+  #letter-popup img { width: 92%; }
+  #memory-popup img { max-width: 90%; }
+  .reflection-text { font-size: 18px; padding: 0 12px; }
+  .reflection-text.big { font-size: 26px; }
+
+  .nodes .stage {
+    width: min(920px, 92vw);
+    height: min(640px, 68vh);
+  }
+
+  .star-node {
+    width: 12px;
+    height: 12px;
+  }
+
+  #timeline-next {
+    right: 20px;
+    bottom: 20px;
+  }
+}
+
+/* body.blackout: jangan set background solid (agar rock.gif tetap terlihat).
+   hanya gunakan blackout untuk menyembunyikan elemen lain. */
+body.blackout {
+  color: #fff !important;
+}
+
+/* tetap sembunyikan elemen yang tidak diperlukan saat blackout,
+   tetapi jangan ubah background body sehingga GIF tetap terlihat. */
+body.blackout #bg-video,
+body.blackout #content,
+body.blackout #login,
+body.blackout #letter-popup,
+body.blackout #overlay,
+body.blackout #timeline,
+body.blackout #constellation {
+  display: none !important;
+}
+
+/* =========================
+   HIDE LETTER BUTTON WHEN POETIC ACTIVE
+   ========================= */
+body.poetic #letter-button {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =========================
+   POETIC / rock.gif BACKGROUND (pseudo-element)
+   ========================= */
+
+/* remove logged-in background while poetic active */
+body.poetic {
+  background: none !important;
+  color: #fff;
+}
+
+/* pseudo-element holds rock.gif and fades in/out by opacity */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("paper/rock.gif") center/cover no-repeat fixed;
+  background-size: cover;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0; /* behind UI (most UI elements use z-index > 0) */
+  transition: opacity 1.0s var(--cinema-ease);
+}
+
+/* when poetic active, show GIF */
+body.poetic::before {
+  opacity: 1;
+}
+
+/* helper to trigger fade-in from JS */
+body.poetic.poetic-hidden::before {
+  opacity: 0;
+}
+
+/* =========================
+   AUDIO HINT / FALLBACK
+   ========================= */
+
+/* Audio hint / control (appears only if autoplay blocked) */
+#audio-hint {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 110;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: rgba(0,0,0,0.48);
+  color: #fff;
+  border-radius: 999px;
+  font-family: "Times New Roman", serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 240ms cubic-bezier(0.19, 1, 0.22, 1), transform 180ms;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  user-select: none;
+  backdrop-filter: blur(6px);
+}
+
+#audio-hint:hover {
+  transform: translateY(-2px);
+}
+
+#audio-hint[hidden] {
+  display: none;
+  opacity: 0;
+}
+
+/* audio icon */
+.audio-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.audio-label {
+  display: inline-block;
+  line-height: 1;
+  opacity: 0.95;
+}
